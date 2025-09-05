@@ -2,7 +2,6 @@ using CK.Core;
 
 namespace CK.IO.UserInvitation;
 
-[CKTypeDefiner]
 public interface IPartialUserInvitation : IPoco
 {
     /// <summary>

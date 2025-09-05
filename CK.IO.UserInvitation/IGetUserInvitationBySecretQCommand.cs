@@ -1,9 +1,7 @@
 using CK.Cris;
-using CK.TypeScript;
 
 namespace CK.IO.UserInvitation;
 
-[TypeScriptType]
 public interface IGetUserInvitationBySecretQCommand : ICommandCurrentCulture, ICommand<IGetUserInvitationBySecretResult>
 {
     /// <summary>

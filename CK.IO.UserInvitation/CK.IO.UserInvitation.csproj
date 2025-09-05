@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+    </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CK.IO.Auth" Version="0.39.2" />
-        <PackageReference Include="CK.TypeScript" Version="0.26.3--0082-develop" />
     </ItemGroup>
+    
 </Project>

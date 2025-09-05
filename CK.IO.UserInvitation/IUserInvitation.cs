@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System;
-using CK.TypeScript;
 
 namespace CK.IO.UserInvitation;
 
-[TypeScriptType]
 public interface IUserInvitation : IPartialUserInvitation
 {
 

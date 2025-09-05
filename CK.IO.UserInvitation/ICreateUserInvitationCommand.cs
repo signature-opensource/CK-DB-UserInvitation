@@ -1,11 +1,11 @@
 using CK.Auth;
 using CK.Cris;
-using CK.TypeScript;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace CK.IO.UserInvitation;
 
-[TypeScriptType]
 public interface ICreateUserInvitationCommand : ICommand<IUserInvitation>, ICommandAuthNormal
 {
     string UserTargetAddress { get; set; }
