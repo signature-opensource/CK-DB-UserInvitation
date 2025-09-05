@@ -1,27 +1,30 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.DB.UserInvitation", "CK.DB.UserInvitation\CK.DB.UserInvitation.csproj", "{FDD35C96-06CD-5E33-13FB-1A3B5D6EFE8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.DB.UserInvitation", "CK.DB.UserInvitation/CK.DB.UserInvitation.csproj", "{FDD35C96-06CD-5E33-13FB-1A3B5D6EFE8C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
-		nuget.config = nuget.config
+		NuGet.config = NuGet.config
 		README.md = README.md
 		RepositoryInfo.xml = RepositoryInfo.xml
+		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{45ED74E1-73B8-4D64-984A-FF67135C6538}"
+	ProjectSection(SolutionItems) = preProject
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.DB.UserInvitation.Tests", "Tests\CK.DB.UserInvitation.Tests\CK.DB.UserInvitation.Tests.csproj", "{A0A4A836-3D1B-EFFB-1F15-B57683B49E83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.DB.UserInvitation.Tests", "Tests/CK.DB.UserInvitation.Tests/CK.DB.UserInvitation.Tests.csproj", "{A0A4A836-3D1B-EFFB-1F15-B57683B49E83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.IO.UserInvitation", "CK.IO.UserInvitation\CK.IO.UserInvitation.csproj", "{25E47654-CE8A-4330-9A8A-CF6DFA571400}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CK.IO.UserInvitation", "CK.IO.UserInvitation/CK.IO.UserInvitation.csproj", "{25E47654-CE8A-4330-9A8A-CF6DFA571400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCakeBuilder", "CodeCakeBuilder\CodeCakeBuilder.csproj", "{484E57FF-04CA-282B-DF8A-95F0C8587F63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCakeBuilder", "CodeCakeBuilder/CodeCakeBuilder.csproj", "{484E57FF-04CA-282B-DF8A-95F0C8587F63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
