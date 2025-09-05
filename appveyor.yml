@@ -5,11 +5,7 @@ environment:
 services: mssql2017
 version: build{build}
 image: Visual Studio 2022
-init:
-- git config --global core.autocrlf true
 clone_folder: C:\CKli-World\CK-Database-Projects\CK-DB-UserInvitation
-build_script:
-- dotnet run --project CodeCakeBuilder -nointeraction
 test: false
 on_finish:
 - ps: >-
@@ -25,3 +21,7 @@ on_finish:
     }
 
     Write-Host "Logs uploaded."
+init:
+- git config --global core.autocrlf true
+build_script:
+- dotnet run --project CodeCakeBuilder -nointeraction
