@@ -436,8 +436,8 @@ public class UserInvitationServiceTests
         invitation!.ExpirationDateUtc.ShouldBe( cmd.ExpirationDateUtc, TimeSpan.FromMilliseconds( 10 ) );
         invitation!.IsActive.ShouldBe( cmd.IsActive );
         invitation!.LCID.ShouldBe( cmd.LCID );
-        invitation!.GroupIdentifiers.ShouldBeEquivalentTo( cmd.GroupIdentifiers );
-        invitation!.RestrictedProviders.ShouldBeEquivalentTo( cmd.RestrictedProviders );
+        invitation!.GroupIdentifiers.Order().ShouldBeEquivalentTo( cmd.GroupIdentifiers.Order() );
+        invitation!.RestrictedProviders.Order().ShouldBeEquivalentTo( cmd.RestrictedProviders.Order() );
     }
 
     [Test]

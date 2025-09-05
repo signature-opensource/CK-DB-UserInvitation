@@ -32,35 +32,6 @@ public abstract class Package : SqlPackage
     [InjectObject, AllowNull]
     public UserInvitationGroupTable UserInvitationGroupTable { get; protected set; }
 
-    [IncomingValidator]
-    public virtual void ValidateCreationCommand( UserMessageCollector c, ICreateUserInvitationCommand cmd )
-    {
-        if( string.IsNullOrEmpty( cmd.UserTargetAddress ) )
-        {
-            c.Error( "Invalid property: UserTargetAddress cannot be null or empty." );
-        }
-        if( cmd.GroupIdentifiers is null or { Count: 0 } )
-        {
-            c.Error( "Invalid property: GroupIdentifiers cannot be null or empty." );
-        }
-        else if( cmd.GroupIdentifiers.Any( groupId => groupId is <= 0 ) )
-        {
-            c.Error( "Invalid value: GroupIdentifiers must contains value higher that 0." );
-        }
-        if( cmd.RestrictedProviders is null or { Count: 0 } )
-        {
-            c.Error( "Invalid property: RestrictedProviders cannot be null or empty." );
-        }
-        else if( cmd.RestrictedProviders.Any( string.IsNullOrEmpty ) )
-        {
-            c.Error( "Invalid value: RestrictedProviders cannot contains null or empty value." );
-        }
-        if( cmd.LCID is <= 0 )
-        {
-            c.Error( "Invalid property: LCID must be higher that 0." );
-        }
-    }
-
     [SqlProcedure( "sUserInvitationCreate" )]
     protected abstract Task<int> CreateUserInvitationAsync( ISqlCallContext ctx, [ParameterSource] ICreateUserInvitationCommand cmd, byte[] secret );
 
@@ -106,9 +77,34 @@ public abstract class Package : SqlPackage
     public abstract Task SetUserInvitationIsActiveAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationIsActiveCommand cmd );
 
     [CommandHandler]
-    public async Task<IUserInvitation?> GetUserInvitationBySecretAsync( ISqlCallContext ctx, IGetUserInvitationBySecretQCommand cmd )
+    public async Task<IGetUserInvitationBySecretResult?> GetUserInvitationBySecretAsync( ISqlCallContext ctx, UserMessageCollector collector, IGetUserInvitationBySecretQCommand cmd )
     {
-        return await GetUserInvitationAsync( ctx, Encoding.UTF8.GetBytes( cmd.Secret ) );
+        var invitation = await GetUserInvitationAsync( ctx, Encoding.UTF8.GetBytes( cmd.Secret ) );
+
+        if( invitation is null )
+        {
+            collector.Error( "Invitation not found.", "UserInvitation.InvitationNotFound" );
+        }
+        else
+        {
+            if( invitation.ExpirationDateUtc < DateTime.UtcNow )
+            {
+                collector.Error( "Invitation has expired.", "UserInvitation.InvitationExpired" );
+            }
+
+            if( !invitation.IsActive )
+            {
+                collector.Error( "Invitation is inactive.", "UserInvitation.InvitationInactive" );
+            }
+        }
+
+        var result = cmd.CreateResult( r =>
+        {
+            r.Invitation = invitation;
+        } );
+        result.SetUserMessages( collector );
+
+        return result;
     }
 
     public async Task<IUserInvitation?> GetUserInvitationAsync( ISqlCallContext ctx, byte[] secret )
