@@ -100,7 +100,7 @@ public abstract class Package : SqlPackage
 
         var result = cmd.CreateResult( r =>
         {
-            r.Invitation = invitation;
+            r.Invitation = collector.ErrorCount is 0 ? invitation : null;
         } );
         result.SetUserMessages( collector );
 
@@ -123,7 +123,7 @@ public abstract class Package : SqlPackage
               from CK.tUserInvitation ui
               left join CK.tUserInvitationGroup uig on ui.InvitationId = uig.InvitationId
               left join CK.tUserInvitationAuthProvider uiap on ui.InvitationId = uiap.InvitationId
-              left join CK.tAuthProvider ap on uiap.AuthProviderId = ap.AuthProviderId
+              left join CK.tAuthProvider ap on uiap.ProviderName like ap.ProviderName + '%'
               where ui.Secret = @Secret;",
             GetMapper( inv => invitation ??= inv ),
             new { Secret = secret },

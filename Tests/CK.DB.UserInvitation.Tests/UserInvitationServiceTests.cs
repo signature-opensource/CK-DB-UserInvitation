@@ -9,6 +9,7 @@ using NUnit.Framework;
 using Shouldly;
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CK.DB.UserInvitation.Tests;
@@ -464,6 +465,158 @@ public class UserInvitationServiceTests
 
         var invitation = await pkg.GetUserInvitationAsync( ctx, dir.Create<IGetUserInvitationQCommand>( i => { i.ActorId = userId; i.InvitationId = result.InvitationId; } ) );
         invitation.ShouldBeNull();
+    }
+
+    [Test]
+    public async Task Get_invitation_with_secret_Async()
+    {
+        using var scopedServices = SharedEngine.AutomaticServices.CreateScope();
+        var services = scopedServices.ServiceProvider;
+        var dir = services.GetRequiredService<PocoDirectory>();
+        var pkg = services.GetRequiredService<Package>();
+        var userInvitationTable = services.GetRequiredService<UserInvitationTable>();
+        var collector = services.GetRequiredService<UserMessageCollector>();
+        using var ctx = new SqlTransactionCallContext();
+
+        var cmd = dir.Create<ICreateUserInvitationCommand>( c =>
+        {
+            c.ActorId = 1;
+            c.UserTargetAddress = NewGuid;
+            c.ExpirationDateUtc = Tomorrow;
+            c.IsActive = true;
+        } );
+        var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
+        invitation.ShouldNotBeNull();
+        invitation.InvitationId.ShouldBeGreaterThan( 0 );
+        invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
+        invitation.LCID.ShouldBe( cmd.LCID );
+
+        var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
+        secret.ShouldNotBeNull().ShouldNotBeEmpty();
+        var cmd2 = dir.Create<IGetUserInvitationBySecretQCommand>( r =>
+        {
+            r.Secret = Encoding.UTF8.GetString( secret );
+        } );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        sut.ShouldNotBeNull();
+        sut.Success.ShouldBeTrue();
+        sut.UserMessages.ShouldBeEmpty();
+        sut.Invitation.ShouldNotBeNull();
+        sut.Invitation.UserTargetAddress.ShouldBe( invitation.UserTargetAddress );
+        sut.Invitation.InvitationId.ShouldBe( invitation.InvitationId );
+        sut.Invitation.LCID.ShouldBe( invitation.LCID );
+    }
+
+    [Test]
+    public async Task Cannot_get_invitation_with_invalid_secret_Async()
+    {
+        using var scopedServices = SharedEngine.AutomaticServices.CreateScope();
+        var services = scopedServices.ServiceProvider;
+        var dir = services.GetRequiredService<PocoDirectory>();
+        var pkg = services.GetRequiredService<Package>();
+        var userInvitationTable = services.GetRequiredService<UserInvitationTable>();
+        var collector = services.GetRequiredService<UserMessageCollector>();
+        using var ctx = new SqlTransactionCallContext();
+
+        var cmd = dir.Create<ICreateUserInvitationCommand>( c =>
+        {
+            c.ActorId = 1;
+            c.UserTargetAddress = NewGuid;
+            c.ExpirationDateUtc = Tomorrow;
+            c.IsActive = true;
+        } );
+        var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
+        invitation.ShouldNotBeNull();
+        invitation.InvitationId.ShouldBeGreaterThan( 0 );
+        invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
+        invitation.LCID.ShouldBe( cmd.LCID );
+
+        var cmd2 = dir.Create<IGetUserInvitationBySecretQCommand>( r =>
+        {
+            r.Secret = NewGuid.Substring( 0, 24 );
+        } );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        sut.ShouldNotBeNull();
+        sut.Invitation.ShouldBeNull();
+        sut.Success.ShouldBeFalse();
+        sut.UserMessages.Count.ShouldBe( 1 );
+        sut.UserMessages[0].Level.ShouldBe( UserMessageLevel.Error );
+    }
+
+    [Test]
+    public async Task Cannot_get_expired_invitation_with_secret_Async()
+    {
+        using var scopedServices = SharedEngine.AutomaticServices.CreateScope();
+        var services = scopedServices.ServiceProvider;
+        var dir = services.GetRequiredService<PocoDirectory>();
+        var pkg = services.GetRequiredService<Package>();
+        var userInvitationTable = services.GetRequiredService<UserInvitationTable>();
+        var collector = services.GetRequiredService<UserMessageCollector>();
+        using var ctx = new SqlTransactionCallContext();
+
+        var cmd = dir.Create<ICreateUserInvitationCommand>( c =>
+        {
+            c.ActorId = 1;
+            c.UserTargetAddress = NewGuid;
+            c.ExpirationDateUtc = DateTime.UtcNow.AddDays( -1 );
+            c.IsActive = true;
+        } );
+        var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
+        invitation.ShouldNotBeNull();
+        invitation.InvitationId.ShouldBeGreaterThan( 0 );
+        invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
+        invitation.LCID.ShouldBe( cmd.LCID );
+
+        var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
+        secret.ShouldNotBeNull().ShouldNotBeEmpty();
+        var cmd2 = dir.Create<IGetUserInvitationBySecretQCommand>( r =>
+        {
+            r.Secret = Encoding.UTF8.GetString( secret );
+        } );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        sut.ShouldNotBeNull();
+        sut.Invitation.ShouldBeNull();
+        sut.Success.ShouldBeFalse();
+        sut.UserMessages.Count.ShouldBe( 1 );
+        sut.UserMessages[0].Level.ShouldBe( UserMessageLevel.Error );
+    }
+
+    [Test]
+    public async Task Cannot_get_deactivated_invitation_with_secret_Async()
+    {
+        using var scopedServices = SharedEngine.AutomaticServices.CreateScope();
+        var services = scopedServices.ServiceProvider;
+        var dir = services.GetRequiredService<PocoDirectory>();
+        var pkg = services.GetRequiredService<Package>();
+        var userInvitationTable = services.GetRequiredService<UserInvitationTable>();
+        var collector = services.GetRequiredService<UserMessageCollector>();
+        using var ctx = new SqlTransactionCallContext();
+
+        var cmd = dir.Create<ICreateUserInvitationCommand>( c =>
+        {
+            c.ActorId = 1;
+            c.UserTargetAddress = NewGuid;
+            c.ExpirationDateUtc = Tomorrow;
+            c.IsActive = false;
+        } );
+        var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
+        invitation.ShouldNotBeNull();
+        invitation.InvitationId.ShouldBeGreaterThan( 0 );
+        invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
+        invitation.LCID.ShouldBe( cmd.LCID );
+
+        var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
+        secret.ShouldNotBeNull().ShouldNotBeEmpty();
+        var cmd2 = dir.Create<IGetUserInvitationBySecretQCommand>( r =>
+        {
+            r.Secret = Encoding.UTF8.GetString( secret );
+        } );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        sut.ShouldNotBeNull();
+        sut.Invitation.ShouldBeNull();
+        sut.Success.ShouldBeFalse();
+        sut.UserMessages.Count.ShouldBe( 1 );
+        sut.UserMessages[0].Level.ShouldBe( UserMessageLevel.Error );
     }
 
     static DateTime Tomorrow => DateTime.UtcNow.AddDays( 1 );
