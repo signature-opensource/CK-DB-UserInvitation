@@ -5,13 +5,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.DB.Actor.Tests" Version="25.0.1--0044-develop" />
-    <PackageReference Include="CK.DB.Auth.Tests" Version="25.0.1--0044-develop" />
-    <PackageReference Include="CK.DB.Culture.Tests" Version="25.0.1--0044-develop" />
-    <PackageReference Include="CK.Cris.Engine" Version="0.39.2--0039-develop" />
-    <PackageReference Include="CK.Poco.Exc.Json.Engine" Version="30.0.1--0054-develop" />
-    <PackageReference Include="CK.TypeScript.Engine" Version="0.26.3--0142-develop" />
-    <PackageReference Include="CK.DB.Tests.NUnit" Version="30.0.1--0045-develop" />
+    <PackageReference Include="CK.DB.Actor.Tests" Version="25.0.1--0045-develop" />
+    <PackageReference Include="CK.DB.Auth.Tests" Version="25.0.1--0045-develop" />
+    <PackageReference Include="CK.DB.Culture.Tests" Version="25.0.1--0045-develop" />
+    <PackageReference Include="CK.Cris.Engine" Version="0.39.2--0040-develop" />
+    <PackageReference Include="CK.Poco.Exc.Json.Engine" Version="30.0.1--0055-develop" />
+    <PackageReference Include="CK.TypeScript.Engine" Version="0.26.3--0144-develop" />
+    <PackageReference Include="CK.DB.Tests.NUnit" Version="30.0.1--0046-develop" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" PrivateAssets="all" />
   </ItemGroup>
