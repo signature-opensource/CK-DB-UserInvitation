@@ -8,10 +8,10 @@
     <None Remove="Res\**\*.sql;Res\**\*.tql" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CK.DB.Actor" Version="26.0.2" />
-    <PackageReference Include="CK.DB.Auth" Version="26.0.2" />
-    <PackageReference Include="CK.DB.Culture" Version="26.0.2" />
-    <PackageReference Include="CK.SqlServer.Dapper" Version="13.0.1" />
+    <PackageReference Include="CK.DB.Actor" Version="27.0.0" />
+    <PackageReference Include="CK.DB.Auth" Version="27.0.0" />
+    <PackageReference Include="CK.DB.Culture" Version="27.0.0" />
+    <PackageReference Include="CK.SqlServer.Dapper" Version="14.0.0" />
     <PackageReference Include="CK.SqlServer.Transaction" Version="11.0.1" />
   </ItemGroup>
   <ItemGroup>
