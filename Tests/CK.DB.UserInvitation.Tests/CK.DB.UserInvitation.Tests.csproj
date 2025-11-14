@@ -5,13 +5,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.DB.Actor.Tests" Version="27.0.1" />
-    <PackageReference Include="CK.DB.Auth.Tests" Version="27.0.1" />
-    <PackageReference Include="CK.DB.Culture.Tests" Version="27.0.1" />
-    <PackageReference Include="CK.Cris.Engine" Version="0.41.1" />
-    <PackageReference Include="CK.Poco.Exc.Json.Engine" Version="32.0.0" />
-    <PackageReference Include="CK.TypeScript.Engine" Version="0.29.0" />
-    <PackageReference Include="CK.DB.Tests.NUnit" Version="32.0.1" />
+    <PackageReference Include="CK.DB.Actor.Tests" Version="27.1.0" />
+    <PackageReference Include="CK.DB.Auth.Tests" Version="27.1.0" />
+    <PackageReference Include="CK.DB.Culture.Tests" Version="27.1.0" />
+    <PackageReference Include="CK.Cris.Engine" Version="0.42.0" />
+    <PackageReference Include="CK.Poco.Exc.Json.Engine" Version="32.1.0" />
+    <PackageReference Include="CK.TypeScript.Engine" Version="0.30.0" />
+    <PackageReference Include="CK.DB.Tests.NUnit" Version="32.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.1.0" PrivateAssets="all" />
   </ItemGroup>
