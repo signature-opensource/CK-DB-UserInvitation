@@ -18,7 +18,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CK.DB.UserInvitation\CK.DB.UserInvitation.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="DotNet.ReproducibleBuilds" Version="2.0.2" />
-  </ItemGroup>
 </Project>
