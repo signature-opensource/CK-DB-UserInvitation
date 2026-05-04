@@ -13,5 +13,4 @@
   </Folder>
   <Project Path="CK.DB.UserInvitation/CK.DB.UserInvitation.csproj" />
   <Project Path="CK.IO.UserInvitation/CK.IO.UserInvitation.csproj" />
-  <Project Path="CodeCakeBuilder/CodeCakeBuilder.csproj" />
 </Solution>
