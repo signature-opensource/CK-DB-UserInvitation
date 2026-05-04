@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="appveyor.yml" />
+    <File Path="Directory.Build.props" />
+    <File Path="NuGet.config" />
+    <File Path="README.md" />
+    <File Path="RepositoryInfo.xml" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/CK.DB.UserInvitation.Tests/CK.DB.UserInvitation.Tests.csproj" />
+  </Folder>
+  <Project Path="CK.DB.UserInvitation/CK.DB.UserInvitation.csproj" />
+  <Project Path="CK.IO.UserInvitation/CK.IO.UserInvitation.csproj" />
+  <Project Path="CodeCakeBuilder/CodeCakeBuilder.csproj" />
+</Solution>
