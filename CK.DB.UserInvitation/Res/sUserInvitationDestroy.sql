@@ -15,13 +15,13 @@ begin
     begin
         if not exists (select 1 from CK.tUserInvitation where InvitationId = @InvitationId and CreatedById = @ActorId) throw 50000, 'UserInvitation.Only', 1;
 
-        --<PreCreate revert />
+        --<PreDestroy revert />
 
         delete from CK.tUserInvitationAuthProvider where InvitationId = @InvitationId;
         delete from CK.tUserInvitationGroup where InvitationId = @InvitationId;
         delete from CK.tUserInvitation where InvitationId = @InvitationId;
 
-    	--<PostCreate />
+    	--<PostDestroy />
     end
 
 	--[endsp]

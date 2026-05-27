@@ -497,7 +497,7 @@ public class UserInvitationServiceTests
         {
             r.Secret = Encoding.UTF8.GetString( secret );
         } );
-        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2, dir );
         sut.ShouldNotBeNull();
         sut.Success.ShouldBeTrue();
         sut.UserMessages.ShouldBeEmpty();
@@ -535,7 +535,7 @@ public class UserInvitationServiceTests
         {
             r.Secret = NewGuid.Substring( 0, 24 );
         } );
-        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2, dir );
         sut.ShouldNotBeNull();
         sut.Invitation.ShouldBeNull();
         sut.Success.ShouldBeFalse();
@@ -573,7 +573,7 @@ public class UserInvitationServiceTests
         {
             r.Secret = Encoding.UTF8.GetString( secret );
         } );
-        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2, dir );
         sut.ShouldNotBeNull();
         sut.Invitation.ShouldBeNull();
         sut.Success.ShouldBeFalse();
@@ -611,7 +611,7 @@ public class UserInvitationServiceTests
         {
             r.Secret = Encoding.UTF8.GetString( secret );
         } );
-        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2 );
+        var sut = await pkg.GetUserInvitationBySecretAsync( ctx, collector, cmd2, dir );
         sut.ShouldNotBeNull();
         sut.Invitation.ShouldBeNull();
         sut.Success.ShouldBeFalse();

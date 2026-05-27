@@ -70,16 +70,17 @@ public abstract class Package : SqlPackage
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationExpirationDateSet" )]
-    public abstract Task SetUserInvitationExpirationDateAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationExpirationDateCommand cmd );
+    public abstract Task<ISetUserInvitationIsActiveCommandResult> SetUserInvitationExpirationDateAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationExpirationDateCommand cmd );
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationIsActiveSet" )]
-    public abstract Task SetUserInvitationIsActiveAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationIsActiveCommand cmd );
+    public abstract Task<ISetUserInvitationExpirationDateCommandResult> SetUserInvitationIsActiveAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationIsActiveCommand cmd );
 
     [CommandHandler]
-    public async Task<IGetUserInvitationBySecretResult?> GetUserInvitationBySecretAsync( ISqlCallContext ctx, UserMessageCollector collector, IGetUserInvitationBySecretQCommand cmd )
+    public async Task<IGetUserInvitationBySecretResult?> GetUserInvitationBySecretAsync( ISqlCallContext ctx, UserMessageCollector collector, IGetUserInvitationBySecretQCommand cmd, PocoDirectory pocoDir )
     {
         var invitation = await GetUserInvitationAsync( ctx, Encoding.UTF8.GetBytes( cmd.Secret ) );
+        var partialInv = pocoDir.Create<IPartialUserInvitation>();
 
         if( invitation is null )
         {
@@ -96,11 +97,18 @@ public abstract class Package : SqlPackage
             {
                 collector.Error( "Invitation is inactive.", "UserInvitation.InvitationInactive" );
             }
+
+            if( collector.ErrorCount == 0 )
+            {
+                partialInv.InvitationId = invitation.InvitationId;
+                partialInv.UserTargetAddress = invitation.UserTargetAddress;
+                partialInv.LCID = invitation.LCID;
+            }
         }
 
         var result = cmd.CreateResult( r =>
         {
-            r.Invitation = collector.ErrorCount is 0 ? invitation : null;
+            r.Invitation = collector.ErrorCount is 0 ? partialInv : null;
         } );
         result.SetUserMessages( collector );
 
@@ -217,7 +225,7 @@ public abstract class Package : SqlPackage
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationDestroy" )]
-    public abstract Task DestroyUserInvitationAsync( ISqlCallContext ctx, [ParameterSource] IDestroyUserInvitationCommand cmd );
+    public abstract Task<IDestroyUserInvitationCommandResult> DestroyUserInvitationAsync( ISqlCallContext ctx, [ParameterSource] IDestroyUserInvitationCommand cmd );
 
     static Func<IUserInvitation, int?, string, IUserInvitation> GetMapper( Func<IUserInvitation, IUserInvitation> getInvitation )
     {
