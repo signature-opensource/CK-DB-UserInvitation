@@ -32,7 +32,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
             c.GroupIdentifiers.Clear();
             c.RestrictedProviders.Clear();
         } );
@@ -44,7 +44,7 @@ public class UserInvitationServiceTests
         invitation!.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
         invitation!.ExpirationDateUtc.ShouldBe( cmd.ExpirationDateUtc, TimeSpan.FromMilliseconds( 10 ) /* Because datetime2( 2 )*/ );
         invitation!.IsActive.ShouldBe( cmd.IsActive );
-        invitation!.LCID.ShouldBe( cmd.LCID );
+        invitation!.CultureId.ShouldBe( cmd.CultureId );
         invitation!.GroupIdentifiers.ShouldBeEquivalentTo( cmd.GroupIdentifiers );
         invitation!.RestrictedProviders.ShouldBeEquivalentTo( cmd.RestrictedProviders );
     }
@@ -64,7 +64,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -88,7 +88,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         await Util.Awaitable( () => pkg.CreateUserInvitationAsync( ctx, cmd ) ).ShouldThrowAsync<Exception>();
@@ -109,14 +109,14 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = string.Empty;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         await Util.Awaitable( () => pkg.CreateUserInvitationAsync( ctx, cmd ) ).ShouldThrowAsync<Exception>();
     }
 
     [Test]
-    public async Task Cannot_create_invitation_with_LCID_0_Async()
+    public async Task Cannot_create_invitation_with_CultureId_0_Async()
     {
         using var scopedServices = SharedEngine.AutomaticServices.CreateScope();
         var services = scopedServices.ServiceProvider;
@@ -130,7 +130,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 0;
+            c.CultureId = 0;
         } );
 
         await Util.Awaitable( () => pkg.CreateUserInvitationAsync( ctx, cmd ) ).ShouldThrowAsync<Exception>();
@@ -151,7 +151,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -187,7 +187,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -223,7 +223,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -258,7 +258,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -293,7 +293,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -318,7 +318,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         await Util.Awaitable( () => pkg.DestroyUserInvitationAsync( ctx, dir.Create<IDestroyUserInvitationCommand>( i => { i.ActorId = 1; i.InvitationId = 0; } ) ) )
             .ShouldThrowAsync<Exception>();
@@ -339,7 +339,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -373,7 +373,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
             c.GroupIdentifiers.Add( group1Id );
             c.GroupIdentifiers.Add( group2Id );
             c.RestrictedProviders.Add( providerName1 );
@@ -390,7 +390,7 @@ public class UserInvitationServiceTests
         invitation!.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
         invitation!.ExpirationDateUtc.ShouldBe( cmd.ExpirationDateUtc, TimeSpan.FromMilliseconds( 10 ) );
         invitation!.IsActive.ShouldBe( cmd.IsActive );
-        invitation!.LCID.ShouldBe( cmd.LCID );
+        invitation!.CultureId.ShouldBe( cmd.CultureId );
         invitation!.GroupIdentifiers.Order().ShouldBeEquivalentTo( cmd.GroupIdentifiers.Order() );
         invitation!.RestrictedProviders.Order().ShouldBeEquivalentTo( cmd.RestrictedProviders.Order() );
     }
@@ -419,7 +419,7 @@ public class UserInvitationServiceTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
             c.GroupIdentifiers.Add( group1Id );
             c.GroupIdentifiers.Add( group2Id );
             c.RestrictedProviders.Add( providerName1 );
@@ -436,7 +436,7 @@ public class UserInvitationServiceTests
         invitation!.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
         invitation!.ExpirationDateUtc.ShouldBe( cmd.ExpirationDateUtc, TimeSpan.FromMilliseconds( 10 ) );
         invitation!.IsActive.ShouldBe( cmd.IsActive );
-        invitation!.LCID.ShouldBe( cmd.LCID );
+        invitation!.CultureId.ShouldBe( cmd.CultureId );
         invitation!.GroupIdentifiers.Order().ShouldBeEquivalentTo( cmd.GroupIdentifiers.Order() );
         invitation!.RestrictedProviders.Order().ShouldBeEquivalentTo( cmd.RestrictedProviders.Order() );
     }
@@ -489,7 +489,7 @@ public class UserInvitationServiceTests
         invitation.ShouldNotBeNull();
         invitation.InvitationId.ShouldBeGreaterThan( 0 );
         invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
-        invitation.LCID.ShouldBe( cmd.LCID );
+        invitation.CultureId.ShouldBe( cmd.CultureId );
 
         var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
         secret.ShouldNotBeNull().ShouldNotBeEmpty();
@@ -504,7 +504,7 @@ public class UserInvitationServiceTests
         sut.Invitation.ShouldNotBeNull();
         sut.Invitation.UserTargetAddress.ShouldBe( invitation.UserTargetAddress );
         sut.Invitation.InvitationId.ShouldBe( invitation.InvitationId );
-        sut.Invitation.LCID.ShouldBe( invitation.LCID );
+        sut.Invitation.CultureId.ShouldBe( invitation.CultureId );
     }
 
     [Test]
@@ -529,7 +529,7 @@ public class UserInvitationServiceTests
         invitation.ShouldNotBeNull();
         invitation.InvitationId.ShouldBeGreaterThan( 0 );
         invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
-        invitation.LCID.ShouldBe( cmd.LCID );
+        invitation.CultureId.ShouldBe( cmd.CultureId );
 
         var cmd2 = dir.Create<IGetUserInvitationBySecretQCommand>( r =>
         {
@@ -565,7 +565,7 @@ public class UserInvitationServiceTests
         invitation.ShouldNotBeNull();
         invitation.InvitationId.ShouldBeGreaterThan( 0 );
         invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
-        invitation.LCID.ShouldBe( cmd.LCID );
+        invitation.CultureId.ShouldBe( cmd.CultureId );
 
         var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
         secret.ShouldNotBeNull().ShouldNotBeEmpty();
@@ -603,7 +603,7 @@ public class UserInvitationServiceTests
         invitation.ShouldNotBeNull();
         invitation.InvitationId.ShouldBeGreaterThan( 0 );
         invitation.UserTargetAddress.ShouldBe( cmd.UserTargetAddress );
-        invitation.LCID.ShouldBe( cmd.LCID );
+        invitation.CultureId.ShouldBe( cmd.CultureId );
 
         var secret = await userInvitationTable.GetUserInvitationSecretAsync( ctx, 1, invitation.InvitationId );
         secret.ShouldNotBeNull().ShouldNotBeEmpty();

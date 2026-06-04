@@ -15,7 +15,7 @@ public interface IPartialUserInvitation : IPoco
     string UserTargetAddress { get; set; }
 
     /// <summary>
-    /// Gets or sets the LCID for the future user.
+    /// Gets or sets the CultureId for the future user.
     /// </summary>
-    int LCID { get; set; }
+    int CultureId { get; set; }
 }

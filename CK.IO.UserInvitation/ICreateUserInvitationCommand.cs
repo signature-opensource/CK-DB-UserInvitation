@@ -18,6 +18,6 @@ public interface ICreateUserInvitationCommand : ICommand<IUserInvitation>, IComm
 
     IList<string> RestrictedProviders { get; }
 
-    [DefaultValue( 12 )]
-    int LCID { get; set; }
+    [DefaultValue( 210327884 )]
+    int CultureId { get; set; }
 }

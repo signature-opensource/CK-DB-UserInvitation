@@ -41,7 +41,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -80,7 +80,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -122,7 +122,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -163,7 +163,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -206,7 +206,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -254,7 +254,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );
@@ -299,7 +299,7 @@ public class UserInvitationGroupTableTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var result = await pkg.CreateUserInvitationAsync( ctx, cmd );
         result.InvitationId.ShouldBeGreaterThan( 0 );

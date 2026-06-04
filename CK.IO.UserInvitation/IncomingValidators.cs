@@ -32,9 +32,9 @@ public class IncomingValidators : IRealObject
         {
             c.Error( "Invalid value: RestrictedProviders cannot contains null or empty value." );
         }
-        if( cmd.LCID is <= 0 )
+        if( cmd.CultureId is <= 0 )
         {
-            c.Error( "Invalid property: LCID must be higher that 0." );
+            c.Error( "Invalid property: CultureId must be higher that 0." );
         }
     }
 }
