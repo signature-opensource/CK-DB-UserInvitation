@@ -10,7 +10,7 @@ namespace CK.DB.UserInvitation;
 [SqlObjectItem( "fGetUserInvitationByUser" )]
 public abstract class UserInvitationTable : SqlTable
 {
-    void StObjConstruct( CK.DB.Actor.ActorTable actor, CK.DB.Culture.LCIDTable lcid )
+    void StObjConstruct( CK.DB.Actor.ActorTable actor, CK.DB.Globalization.CultureTable culture )
     {
     }
 

@@ -125,7 +125,7 @@ public abstract class Package : SqlPackage
                     ,ui.UserTargetAddress
                     ,ui.ExpirationDateUtc
                     ,ui.IsActive
-                    ,ui.LCID
+                    ,ui.CultureId
                     ,uig.GroupId
                     ,ap.ProviderName
               from CK.tUserInvitation ui
@@ -158,7 +158,7 @@ public abstract class Package : SqlPackage
                         ,UserTargetAddress
                         ,ExpirationDateUtc
                         ,IsActive
-                        ,LCID
+                        ,CultureId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId )
@@ -183,7 +183,7 @@ public abstract class Package : SqlPackage
                         ,UserTargetAddress
                         ,ExpirationDateUtc
                         ,IsActive
-                        ,LCID
+                        ,CultureId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId );",
@@ -211,7 +211,7 @@ public abstract class Package : SqlPackage
                         ,UserTargetAddress
                         ,ExpirationDateUtc
                         ,IsActive
-                        ,LCID
+                        ,CultureId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId )

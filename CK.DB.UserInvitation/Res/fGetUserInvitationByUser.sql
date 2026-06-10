@@ -10,7 +10,7 @@ return
           ,ui.UserTargetAddress
           ,ui.ExpirationDateUtc
           ,ui.IsActive
-          ,ui.LCID
+          ,ui.CultureId
           ,uig.GroupId
           ,ap.ProviderName
     from CK.tUserInvitation ui

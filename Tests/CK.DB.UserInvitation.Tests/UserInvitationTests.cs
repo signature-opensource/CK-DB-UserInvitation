@@ -29,7 +29,7 @@ public class UserInvitationTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
 
         var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
@@ -55,7 +55,7 @@ public class UserInvitationTests
             c.UserTargetAddress = NewGuid;
             c.ExpirationDateUtc = Tomorrow;
             c.IsActive = true;
-            c.LCID = 12;
+            c.CultureId = 210327884;
         } );
         var invitation = await pkg.CreateUserInvitationAsync( ctx, cmd );
         invitation.CreatedById.ShouldBe( cmd.ActorId!.Value );
