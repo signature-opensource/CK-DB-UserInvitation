@@ -19,7 +19,7 @@ public interface IUserInvitation : IPoco
     /// <summary>
     /// Gets or sets the LCID for the future user.
     /// </summary>
-    int LCID { get; set; }
+    int CultureId { get; set; }
 
     /// <summary>
     /// Gets the invitation author.

@@ -57,10 +57,7 @@ public abstract class Package : SqlPackage
             // TODO: Wait that Spi implements this awesome method to create a poco from a poco.
             //var invitation = await GetUserInvitationAsync( ctx, cmd.Create<IGetUserInvitationQCommand>( i => i.InvitationId = invitationId ) );
 
-            if( invitation is null )
-            {
-                throw new InvalidOperationException( $"Cannot obtain user invitation with id {invitationId}." );
-            }
+            Throw.CheckState( $"Cannot obtain user invitation with id {invitationId}.", invitation is not null );
 
             transaction.Commit();
 
@@ -102,7 +99,7 @@ public abstract class Package : SqlPackage
             {
                 partialInv.InvitationId = invitation.InvitationId;
                 partialInv.UserTargetAddress = invitation.UserTargetAddress;
-                partialInv.LCID = invitation.LCID;
+                partialInv.CultureId = invitation.CultureId;
             }
         }
 
