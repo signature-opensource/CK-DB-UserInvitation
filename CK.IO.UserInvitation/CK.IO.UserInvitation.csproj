@@ -3,6 +3,6 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CK.IO.Auth" Version="0.43.1" />
+    <PackageReference Include="CK.IO.Auth" Version="0.43.2--ci.1" />
   </ItemGroup>
 </Project>
