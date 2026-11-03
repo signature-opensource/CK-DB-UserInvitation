@@ -7,7 +7,8 @@ create procedure CK.sUserInvitationCreate
     @IsActive bit,
     @CultureId int,
     @Secret binary( 24 ),
-    @InvitationId int output
+    @InvitationId int output,
+    @IssuingPartyId int = 0
 )
 as
 begin
@@ -19,7 +20,7 @@ begin
 	
     --<PreCreate revert />
 
-    insert into CK.tUserInvitation( CreatedById, UserTargetAddress, ExpirationDateUtc, IsActive, CultureId, [Secret] ) values( @ActorId, @UserTargetAddress, @ExpirationDateUtc, @IsActive, @CultureId, @Secret );
+    insert into CK.tUserInvitation( CreatedById, UserTargetAddress, ExpirationDateUtc, IsActive, CultureId, [Secret], IssuingPartyId ) values( @ActorId, @UserTargetAddress, @ExpirationDateUtc, @IsActive, @CultureId, @Secret, @IssuingPartyId );
     set @InvitationId = scope_identity();
 
 	--<PostCreate />	

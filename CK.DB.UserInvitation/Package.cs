@@ -33,16 +33,33 @@ public abstract class Package : SqlPackage
     public UserInvitationGroupTable UserInvitationGroupTable { get; protected set; }
 
     [SqlProcedure( "sUserInvitationCreate" )]
-    protected abstract Task<int> CreateUserInvitationAsync( ISqlCallContext ctx, [ParameterSource] ICreateUserInvitationCommand cmd, byte[] secret );
+    protected abstract Task<int> CreateUserInvitationAsync( ISqlCallContext ctx, [ParameterSource] ICreateUserInvitationCommand cmd, byte[] secret, int issuingPartyId );
 
+    /// <summary>
+    /// Creates an invitation that is not bound to a party (see <see cref="CreateUserInvitationAsync(ISqlTransactionCallContext, ICreateUserInvitationCommand, int)"/>).
+    /// </summary>
+    /// <param name="ctx">The call context.</param>
+    /// <param name="cmd">The command.</param>
+    /// <returns>The invitation.</returns>
     [CommandHandler]
-    public async Task<IUserInvitation> CreateUserInvitationAsync( ISqlTransactionCallContext ctx, ICreateUserInvitationCommand cmd )
+    public Task<IUserInvitation> CreateUserInvitationAsync( ISqlTransactionCallContext ctx, ICreateUserInvitationCommand cmd ) => CreateUserInvitationAsync( ctx, cmd, 0 );
+
+    /// <summary>
+    /// Creates an invitation issued through a party (<see cref="IUserInvitation.IssuingPartyId"/>): the server code that
+    /// knows the caller party sets it, a client never chooses it.
+    /// </summary>
+    /// <param name="ctx">The call context.</param>
+    /// <param name="cmd">The command.</param>
+    /// <param name="issuingPartyId">The PartyActorId of the party through which the invitation is issued (0: unbound).</param>
+    /// <returns>The invitation.</returns>
+    public async Task<IUserInvitation> CreateUserInvitationAsync( ISqlTransactionCallContext ctx, ICreateUserInvitationCommand cmd, int issuingPartyId )
     {
         Throw.DebugAssert( cmd.ActorId is not null );
+        Throw.CheckOutOfRangeArgument( issuingPartyId >= 0 );
 
         using( var transaction = ctx.GetConnectionController( this ).BeginTransaction() )
         {
-            var invitationId = await CreateUserInvitationAsync( ctx, cmd, GenerateSecret( length: 12 ) );
+            var invitationId = await CreateUserInvitationAsync( ctx, cmd, GenerateSecret( length: 12 ), issuingPartyId );
 
             foreach( var provider in cmd.RestrictedProviders )
             {
@@ -64,6 +81,18 @@ public abstract class Package : SqlPackage
             return invitation;
         }
     }
+
+    /// <summary>
+    /// Sets the party through which an invitation is issued (<see cref="IUserInvitation.IssuingPartyId"/>): a resent
+    /// invitation is bound to the party that resends it. This is for the server code: it is not a command.
+    /// </summary>
+    /// <param name="ctx">The call context.</param>
+    /// <param name="actorId">The acting actor.</param>
+    /// <param name="invitationId">The invitation.</param>
+    /// <param name="issuingPartyId">The PartyActorId of the party (0: unbound).</param>
+    /// <returns>The awaitable.</returns>
+    [SqlProcedure( "sUserInvitationIssuingPartySet" )]
+    public abstract Task SetUserInvitationIssuingPartyAsync( ISqlCallContext ctx, int actorId, int invitationId, int issuingPartyId );
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationExpirationDateSet" )]
@@ -123,6 +152,7 @@ public abstract class Package : SqlPackage
                     ,ui.ExpirationDateUtc
                     ,ui.IsActive
                     ,ui.CultureId
+                    ,ui.IssuingPartyId
                     ,uig.GroupId
                     ,ap.ProviderName
               from CK.tUserInvitation ui
@@ -156,6 +186,7 @@ public abstract class Package : SqlPackage
                         ,ExpirationDateUtc
                         ,IsActive
                         ,CultureId
+                        ,IssuingPartyId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId )
@@ -181,6 +212,7 @@ public abstract class Package : SqlPackage
                         ,ExpirationDateUtc
                         ,IsActive
                         ,CultureId
+                        ,IssuingPartyId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId );",
@@ -209,6 +241,7 @@ public abstract class Package : SqlPackage
                         ,ExpirationDateUtc
                         ,IsActive
                         ,CultureId
+                        ,IssuingPartyId
                         ,GroupId
                         ,ProviderName
                   from CK.fGetUserInvitationByUser( @ActorId )

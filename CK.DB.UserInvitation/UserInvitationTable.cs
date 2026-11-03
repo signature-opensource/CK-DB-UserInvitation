@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace CK.DB.UserInvitation;
 
 [SqlTable( "tUserInvitation", Package = typeof( Package ), ResourcePath = "Res" )]
-[Versions( "1.0.0" )]
+[Versions( "1.0.0,1.0.1" )]
 [SqlObjectItem( "fGetUserInvitationByUser" )]
 public abstract class UserInvitationTable : SqlTable
 {

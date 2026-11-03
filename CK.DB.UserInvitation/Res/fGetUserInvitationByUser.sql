@@ -11,6 +11,7 @@ return
           ,ui.ExpirationDateUtc
           ,ui.IsActive
           ,ui.CultureId
+          ,ui.IssuingPartyId
           ,uig.GroupId
           ,ap.ProviderName
     from CK.tUserInvitation ui
