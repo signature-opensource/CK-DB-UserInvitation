@@ -23,15 +23,21 @@ The Pocos and the Cris commands of the user invitations: the contract shared by 
 
 ## The commands
 
-| Command | Result | Authentication |
+| Command | Result | Exposure, authentication |
 |---|---|---|
-| [`ICreateUserInvitationCommand`](ICreateUserInvitationCommand.cs) | `IUserInvitation` | `ICommandAuthNormal` |
-| [`IGetUserInvitationQCommand`](IGetUserInvitationQCommand.cs) (`InvitationId`) | `IUserInvitation?` | `ICommandAuthNormal` |
-| [`IGetUserInvitationsQCommand`](IGetUserInvitationsQCommand.cs) | `IList<IUserInvitation>` | `ICommandAuthNormal` |
-| [`ISetUserInvitationIsActiveCommand`](ISetUserInvitationIsActiveCommand.cs) (`InvitationId`, `IsActive`) | `ISetUserInvitationIsActiveCommandResult` | `ICommandAuthNormal` |
-| [`ISetUserInvitationExpirationDateCommand`](ISetUserInvitationExpirationDateCommand.cs) (`InvitationId`, `NewExpirationDate`) | `ISetUserInvitationExpirationDateCommandResult` | `ICommandAuthNormal` |
-| [`IDestroyUserInvitationCommand`](IDestroyUserInvitationCommand.cs) (`InvitationId`) | `IDestroyUserInvitationCommandResult` | `ICommandAuthNormal` |
-| [`IGetUserInvitationBySecretQCommand`](IGetUserInvitationBySecretQCommand.cs) (`Secret`) | [`IGetUserInvitationBySecretResult`](IGetUserInvitationBySecretResult.cs): an `IPartialUserInvitation` and the user messages | none (the secret is the proof) |
+| [`ICreateUserInvitationCommand`](ICreateUserInvitationCommand.cs) | `IUserInvitation` | `[Internal]`, `ICommandAuthNormal` |
+| [`IGetUserInvitationQCommand`](IGetUserInvitationQCommand.cs) (`InvitationId`) | `IUserInvitation?` | `[Internal]`, `ICommandAuthNormal` |
+| [`IGetUserInvitationsQCommand`](IGetUserInvitationsQCommand.cs) | `IList<IUserInvitation>` | `[Internal]`, `ICommandAuthNormal` |
+| [`ISetUserInvitationIsActiveCommand`](ISetUserInvitationIsActiveCommand.cs) (`InvitationId`, `IsActive`) | `ISetUserInvitationIsActiveCommandResult` | `[Internal]`, `ICommandAuthNormal` |
+| [`ISetUserInvitationExpirationDateCommand`](ISetUserInvitationExpirationDateCommand.cs) (`InvitationId`, `NewExpirationDate`) | `ISetUserInvitationExpirationDateCommandResult` | `[Internal]`, `ICommandAuthNormal` |
+| [`IDestroyUserInvitationCommand`](IDestroyUserInvitationCommand.cs) (`InvitationId`) | `IDestroyUserInvitationCommandResult` | `[Internal]`, `ICommandAuthNormal` |
+| [`IGetUserInvitationBySecretQCommand`](IGetUserInvitationBySecretQCommand.cs) (`Secret`) | [`IGetUserInvitationBySecretResult`](IGetUserInvitationBySecretResult.cs): an `IPartialUserInvitation` and the user messages | public, none (the secret is the proof) |
+
+**The management commands are `[Internal]`: they never come from HTTP.** This package has no rights model: it doesn't
+know who can give which group, nor who can manage which invitation (`ISetUserInvitationIsActiveCommand` and
+`ISetUserInvitationExpirationDateCommand` don't check the actor). The application checks the rights, then sends these
+commands from the System or calls the package (CK-UserManagement does). Only the registration query, whose secret is the
+proof, is public.
 
 The [`IncomingValidators`](IncomingValidators.cs) check an `ICreateUserInvitationCommand`: a `UserTargetAddress`, at least
 one group (positive identifiers), at least one restricted provider (not empty), a positive `CultureId`.

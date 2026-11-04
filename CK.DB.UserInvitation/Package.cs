@@ -96,11 +96,11 @@ public abstract class Package : SqlPackage
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationExpirationDateSet" )]
-    public abstract Task<ISetUserInvitationIsActiveCommandResult> SetUserInvitationExpirationDateAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationExpirationDateCommand cmd );
+    public abstract Task<ISetUserInvitationExpirationDateCommandResult> SetUserInvitationExpirationDateAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationExpirationDateCommand cmd );
 
     [CommandHandler]
     [SqlProcedure( "sUserInvitationIsActiveSet" )]
-    public abstract Task<ISetUserInvitationExpirationDateCommandResult> SetUserInvitationIsActiveAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationIsActiveCommand cmd );
+    public abstract Task<ISetUserInvitationIsActiveCommandResult> SetUserInvitationIsActiveAsync( ISqlCallContext ctx, [ParameterSource] ISetUserInvitationIsActiveCommand cmd );
 
     [CommandHandler]
     public async Task<IGetUserInvitationBySecretResult?> GetUserInvitationBySecretAsync( ISqlCallContext ctx, UserMessageCollector collector, IGetUserInvitationBySecretQCommand cmd, PocoDirectory pocoDir )

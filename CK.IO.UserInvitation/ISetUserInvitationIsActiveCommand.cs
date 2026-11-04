@@ -3,6 +3,7 @@ using CK.Cris;
 
 namespace CK.IO.UserInvitation;
 
+[Internal]
 public interface ISetUserInvitationIsActiveCommand : ICommand<ISetUserInvitationIsActiveCommandResult>, ICommandAuthNormal
 {
     int InvitationId { get; set; }

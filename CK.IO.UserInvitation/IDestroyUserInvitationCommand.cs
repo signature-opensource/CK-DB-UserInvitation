@@ -3,6 +3,7 @@ using CK.Cris;
 
 namespace CK.IO.UserInvitation;
 
+[Internal]
 public interface IDestroyUserInvitationCommand : ICommand<IDestroyUserInvitationCommandResult>, ICommandAuthNormal
 {
     int InvitationId { get; set; }

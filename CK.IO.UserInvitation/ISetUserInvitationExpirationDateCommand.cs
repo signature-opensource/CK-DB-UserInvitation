@@ -4,6 +4,7 @@ using System;
 
 namespace CK.IO.UserInvitation;
 
+[Internal]
 public interface ISetUserInvitationExpirationDateCommand : ICommand<ISetUserInvitationExpirationDateCommandResult>, ICommandAuthNormal
 {
     int InvitationId { get; set; }

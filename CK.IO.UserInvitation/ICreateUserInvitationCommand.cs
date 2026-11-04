@@ -6,6 +6,7 @@ using System.ComponentModel;
 
 namespace CK.IO.UserInvitation;
 
+[Internal]
 public interface ICreateUserInvitationCommand : ICommand<IUserInvitation>, ICommandAuthNormal
 {
     string UserTargetAddress { get; set; }
