@@ -28,7 +28,9 @@ providers) and CK.DB.Culture.
 
 ## The issuing party
 
-`IssuingPartyId` is the PartyActorId of the party through which an invitation is issued: the server code that knows the
+`IssuingPartyId` is the actor of the party through which an invitation is issued (its PartyActor: the identity of a
+party across the System is its full name, the server code maps it to an actor with CK.DB.AppIdentity where the actors
+database is): the server code that knows the
 caller party of the request records it, a client never chooses it (it is not a property of a command). 0 is an unbound
 invitation (the ones created before this was recorded).
 - `Package.CreateUserInvitationAsync( ctx, cmd, issuingPartyId )` creates a bound invitation (the command handler

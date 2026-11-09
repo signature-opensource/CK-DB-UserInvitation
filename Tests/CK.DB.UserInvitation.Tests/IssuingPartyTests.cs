@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace CK.DB.UserInvitation.Tests;
 
 /// <summary>
-/// An invitation records the party through which it was issued (its PartyActorId): 0 when it is unbound.
+/// An invitation records the party through which it was issued (the actor of its PartyActor): 0 when it is unbound.
 /// </summary>
 [TestFixture]
 public class IssuingPartyTests

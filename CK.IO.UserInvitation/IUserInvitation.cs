@@ -37,7 +37,8 @@ public interface IUserInvitation : IPoco
     bool IsActive { get; set; }
 
     /// <summary>
-    /// Gets or sets the PartyActorId of the party through which the invitation was issued: its links target the client
+    /// Gets or sets the actor of the party through which the invitation was issued (its PartyActor: the local mapping of
+    /// its full name, see CK.DB.AppIdentity): its links target the client
     /// applications of this party, and the invitation is redeemed only through it. 0: unbound (an invitation created
     /// before this was recorded, redeemed through any party).
     /// </summary>

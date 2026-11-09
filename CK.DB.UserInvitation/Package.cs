@@ -50,7 +50,7 @@ public abstract class Package : SqlPackage
     /// </summary>
     /// <param name="ctx">The call context.</param>
     /// <param name="cmd">The command.</param>
-    /// <param name="issuingPartyId">The PartyActorId of the party through which the invitation is issued (0: unbound).</param>
+    /// <param name="issuingPartyId">The actor of the party through which the invitation is issued (its PartyActor: the local mapping of its full name, see CK.DB.AppIdentity; 0: unbound).</param>
     /// <returns>The invitation.</returns>
     public async Task<IUserInvitation> CreateUserInvitationAsync( ISqlTransactionCallContext ctx, ICreateUserInvitationCommand cmd, int issuingPartyId )
     {
@@ -89,7 +89,7 @@ public abstract class Package : SqlPackage
     /// <param name="ctx">The call context.</param>
     /// <param name="actorId">The acting actor.</param>
     /// <param name="invitationId">The invitation.</param>
-    /// <param name="issuingPartyId">The PartyActorId of the party (0: unbound).</param>
+    /// <param name="issuingPartyId">The actor of the party (its PartyActor; 0: unbound).</param>
     /// <returns>The awaitable.</returns>
     [SqlProcedure( "sUserInvitationIssuingPartySet" )]
     public abstract Task SetUserInvitationIssuingPartyAsync( ISqlCallContext ctx, int actorId, int invitationId, int issuingPartyId );

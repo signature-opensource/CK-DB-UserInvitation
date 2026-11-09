@@ -16,7 +16,7 @@ The Pocos and the Cris commands of the user invitations: the contract shared by 
 | `ExpirationDateUtc`, `IsActive` | An invitation is usable while it is active and not expired. |
 | `GroupIdentifiers` | The groups the new user joins. |
 | `RestrictedProviders` | The authentication providers the new user may use. |
-| `IssuingPartyId` | The PartyActorId of the party through which the invitation was issued (0: unbound). It is set by the server code, never by a command. |
+| `IssuingPartyId` | The actor of the party through which the invitation was issued (its PartyActor, the local mapping of its full name; 0: unbound). It is set by the server code, never by a command. |
 
 [`IPartialUserInvitation`](IPartialUserInvitation.cs) is what an anonymous caller gets from a secret: `InvitationId`,
 `UserTargetAddress` and `CultureId`.
